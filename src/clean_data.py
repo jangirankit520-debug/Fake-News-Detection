@@ -20,8 +20,18 @@ def basic_clean(data):
     return data
 
 def remove_leakage_clues(text):
+
     text = re.sub(r'^[A-Z\s,/]+\((?:Reuters|AP)\)\s*-\s*', '', text)
     text = re.sub(r'\((?:Reuters|AP)\)', '', text)
+
+    text = re.sub(r'\b(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\b', '', text, flags=re.IGNORECASE)
+
+    text = re.sub(r'\b(getty|pic|image|images|com|https?|breitbart|featured)\b', '', text, flags=re.IGNORECASE)
+
+    text = re.sub(r'http\S+', '', text)
+
+    text = re.sub(r'\s+', ' ', text).strip()
+
     return text
 
 if __name__=="__main__":
